@@ -1,12 +1,12 @@
 # Internationalization Example 
 
-### 1 What Is Internationalization ? 
+### 1 What Is Internationalization? 
  
-  Internationalization is the process of making our app support various languages to extend the reach to a worldwide audience.Angular provides `ngx-translate` module to give support of **Internationalization** to our application.
+  Internationalization is the process of making our app support various languages to extend the reach to a worldwide audience. Angular provides the `ngx-translate` module to give support of **Internationalization** to our application.
  
-### 2 What Is Localization ? 
+### 2 What Is Localization? 
 
-  Localization is the process for translating the app to a particular language. 
+  Localization is the process of translating the app to a particular language. 
   
 ### 3 Project Dependency 
 
@@ -87,7 +87,7 @@ Add Attribute `dir` to html tag to change direction :
   // change direction of rendering by`<html dir="rtl"> </html>`
 ```
 
-#### 4.6 Create keys in json files and use `Translate` pipe to reder language specific text in html
+#### 4.6 Create keys in JSON files and use `Translate` pipe to render language-specific text in Html
 
 ```js
   <div class="card-body">
