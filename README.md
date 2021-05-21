@@ -1,27 +1,125 @@
-# InternationalizationExample
+# Internationalization Example 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+### 1 What Is Internationalization ? 
+ 
+  Internationalization is the process of making our app support various languages to extend the reach to a worldwide audience.Angular provides `ngx-translate` module to give support of **Internationalization** to our application.
+ 
+### 2 What Is Localization ? 
 
-## Development server
+  Localization is the process for translating the app to a particular language. 
+  
+### 3 Project Dependency 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+#### 3.1 Important Dependency : 
 
-## Code scaffolding
+ >"@ngx-translate/core" : "^13.0.0",\
+ >"@ngx-translate/http-loader" : "^6.0.0",
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To implement internationalization in our application we have to install these two modules given below.
 
-## Build
+```np
+npm i @ngx-translate/core @ngx-translate/http-loader --save
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+#### 3.2 Extra Dependency :
 
-## Running unit tests
+>"bootstrap": "^5.0.1",
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 4 Steps To Implement Internationalization 
 
-## Running end-to-end tests
+-  Create new `TranslateHttpLoader` instance
+-  Provide TranslateHttpLoader instance to **TranslateModule**
+-  Add different languages to **TranslateService**
+-  Create json(ar.json,en.json,sp.json) files acording to languages
+-  Implemnet **'rtl'** to **'ltr'** according to language selected
+-  Create keys in json files and use `Translate` pipe to reder language specific text in html
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+#### 4.1 Create new TranslateHttpLoader instance
 
-## Further help
+  We have created factory function to create new TranslateHttpLoader instance and provided HttpClient to that instance to request json file according to langugae (en -> en.json) : 
+  
+```js
+  function TranslationLoaderFactory(http: HttpClient) {
+    return new TranslateHttpLoader(http);
+  }
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#### 4.2 Provide TranslateHttpLoader instance to TranslateModule
+
+Provide new instance of TranslateHttpLoader to the TranslateLoader using factory-function 'TranslationLoaderFactory' :
+```js
+  TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: TranslationLoaderFactory,
+        deps: [HttpClient]
+      }
+  })
+```
+
+#### 4.3 Add different languages to TranslateService
+
+Add languge support to translationservice using `addLangs()` method and set any default langngue by using `setDefaultLang` :
+
+```js
+  translateService.addLangs(['en', 'ar', 'sp']);   //set array of languages
+  translateService.setDefaultLang('en');    // set default language
+  const browserLanguage = translateService.getBrowserLang();
+  translateService.use(browserLanguage.match(/en|ar|sp/) ? browserLanguage : 'en');   
+  //if browser language is not from our supported language then use english as laguage
+```
+
+#### 4.4 Create json files acording to languages
+
+- For Arabic  => **ar.json**
+- For English => **en.json**
+- For Spanish => **sp.json**
+
+![i18n-json screenshot](./src/assets/i18n-json.png)
+
+
+#### 4.5 Implemnet **'rtl'** to **'ltr'** according to language selected
+
+Add Attribute `dir` to html tag to change direction :
+```js
+  let htmlTag = this.document.getElementsByTagName('html')[0] as HTMLHtmlElement;
+  htmlTag.dir = language === 'ar' ? 'rtl' : 'ltr'; 
+  // change direction of rendering by`<html dir="rtl"> </html>`
+```
+
+#### 4.6 Create keys in json files and use `Translate` pipe to reder language specific text in html
+
+```js
+  <div class="card-body">
+      <h5 class="card-title">{{ 'card-title' | translate}}</h5>
+      <p class="card-text">{{'card-detail' | translate}}</p>
+      <a href="#" class="btn btn-outline-dark">{{'go-somewhere' | translate}}</a>
+  </div>
+```
+en.json :
+```json
+    "card-title": "Card title"
+```
+ar.json :
+```json
+    "card-title":"عنوان البطاقة"
+```
+sp.json :
+```json
+    "card-title":"Título de la tarjeta"
+```
+
+
+### 5 Change Language 
+
+#### 5.1 English Langugage : 
+
+![English screenshot](./src/assets/english.png)
+
+#### 5.2 Arabic Langugage : 
+
+![Arabic screenshot](./src/assets/arabic.png)
+
+#### 5.3 Spanish Langugage : 
+
+![Spanish screenshot](./src/assets/spanish.png)
