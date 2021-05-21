@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "internationalization-example"
+    }
+  },
+  "defaultProject": "internationalization-example",
+  "cli": {
+    "analytics": false
+  }
 }
