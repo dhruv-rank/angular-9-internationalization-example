@@ -14,7 +14,7 @@ export class AppComponent {
     translateService.addLangs(['en', 'ar', 'sp']);   //set array of languages
     translateService.setDefaultLang('en');    // set default language
     const browserLanguage = translateService.getBrowserLang();
-    translateService.use(browserLanguage.match(/en|ar|sp/) ? browserLanguage : 'en');   //if browser language is not from our supported language then set english as laguage
+    translateService.use(browserLanguage.match(/en|ar|sp/) ? browserLanguage : 'en');   //if browser language is not from our supported language then use english as laguage
   }
 
   chnagelanguage(language: string) {
