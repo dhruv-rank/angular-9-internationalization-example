@@ -23,7 +23,7 @@ function TranslationLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    //provide new instance of TranslateHttpLoader to the TranslateLoader using factory-function  'TranslationLoaderFactory'
+    //provide new instance of TranslateHttpLoader to the TranslateLoader using factory-function 'TranslationLoaderFactory'
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
